@@ -56,7 +56,11 @@ def plot_output(t,conc,conc2,conc3):
 
 def main():
     print("++++++++++Main+++++++++++++")
-    data_path = ".\\python-task\\"
+    loadanalysis = 'n'
+
+    folderpart1 = r'D:\Zohaib\Fivrr\sami\python-task\A'
+    folderpart2 = [r'\01',r'\02',r'\03',r'\04',r'\05',r'\06']
+
     beta = 0.5
 #     f= "D:\\Zohaib\\Fivrr\\sami\\python-task\\A\\01\\HeatSolo.observation_well_conc.005.solute.dat"
 #     data = np.genfromtxt(f,skip_header=2)
@@ -75,25 +79,25 @@ def main():
 # 
 
 
-    for subdirs,dirs,files in os.walk(data_path):  
-       for i in subdirs:
-        print(i) 
-        for fname in files: 
-                print('++++++++inside for+++++++++')
-                print(subdirs)
-                f = subdirs+'\\'+fname
-                data = np.genfromtxt(f,skip_header=2)
-                x= data[0,2]
-                t= data[:,0]/86400
-                print(t)
-                c= data[:,1]
-                print(c)
-                arrpos = np.argmax(c>0.5)
-                v=x/t[arrpos]
-                c2 = ob(beta,x,v,t)
-                betafit = opt_beta(beta,x,v,t,c)
-                c3 = ob(betafit,x,v,t)
-                plot_output(t,c,c2,c3)
+    # for subdirs,dirs,files in os.walk(data_path):  
+    #    for i in subdirs:
+    #     print(i) 
+    #     for fname in files: 
+    #             print('++++++++inside for+++++++++')
+    #             print(subdirs)
+    #             f = subdirs+'\\'+fname
+    #             data = np.genfromtxt(f,skip_header=2)
+    #             x= data[0,2]
+    #             t= data[:,0]/86400
+    #             print(t)
+    #             c= data[:,1]
+    #             print(c)
+    #             arrpos = np.argmax(c>0.5)
+    #             v=x/t[arrpos]
+    #             c2 = ob(beta,x,v,t)
+    #             betafit = opt_beta(beta,x,v,t,c)
+    #             c3 = ob(betafit,x,v,t)
+    #             plot_output(t,c,c2,c3)
 
     
     
