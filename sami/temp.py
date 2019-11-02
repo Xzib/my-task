@@ -1,21 +1,15 @@
-# -*- coding: utf-8 -*-
-"""
-Spyder Editor
-
-This is a temporary script file.
-"""
-
 import numpy as np
 import os 
 import scipy.special as sp
 import scipy.optimize as op
 import matplotlib.pyplot as mpl
+import math
 from sklearn.metrics import mean_squared_error 
 
 def ob(beta,x,v,t):    
     pos_beta = beta
     part1 = sp.erfc((x-(v*t)/(2.*np.sqrt(pos_beta*v*t))))
-    part2 = np.exp((v*x)/(pos_beta*v))
+    part2 = np.exp(np.array((v*x)/(pos_beta*v)))
     part3 = sp.erfc((x+(v*t)/(2.*np.sqrt(pos_beta*v*t))))
     conc = 0.5*(part1+part2*part3)
     print(f'calculted conc = {conc}')
@@ -58,9 +52,9 @@ def main():
     beta = 0.5
 
     loadandanalyse = 'n'
-    folderpart1 = r'.\python-task\Kshort'
+    folderpart1 = r'D:\Zohaib\Fivrr\sami\python-task\Kshort'
     folderpart2 = [r'\01',r'\02',r'\03',r'\04',r'\05',r'\06']
-    outfolder = r'.\python-task\my-output'
+    outfolder = r'D:\Zohaib\Fivrr\sami\python-task\python-task\my-output'
 
     fnameout1 = 'SummaryK.dat'
     fnameout2 = 'SummaryK.png'
@@ -75,17 +69,23 @@ def main():
 
     for i in range(0, len(folderpart2)):
         fullpath = folderpart1+folderpart2[i]
-        os.chdir(fullpath)
+        os.chdir(fullpath)  
         print(fullpath)
         for j in range(0,len(allfiles)):
            temp = np.genfromtxt(allfiles[j],skip_header=2) 
            x = temp[0,2]
+           print(f'value of x = {x}')
            y = temp[0,3]
+           print(f'value of y = {y}')
            val = np.argmax(temp[:,1]>0.5)
            v = (x/temp[val,0])*86400.
+           print(f'value of v= {v}')
            t = temp[:,0]/86400.
-           c = temp[:,1] 
+           print(f'value of t = {t}')
+           c = temp[:,1]
+           print(f'value of c = {c}') 
            c2 = ob(beta,x,v,t)
+           print(f'value of c2 = {c2}')
            betafit = opt_beta(beta,x,v,t,c)
            c3 = ob(betafit,x,v,t)
            plot_output(t,c,c2,c3)
@@ -134,4 +134,3 @@ def main():
 if __name__ == '__main__':
     main()
     
-
